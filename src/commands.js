@@ -1,6 +1,7 @@
 // @ts-check 
 "use strict";
 const exec = require("child_process").exec;
+const kill = require("tree-kill");
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
@@ -69,7 +70,6 @@ var _awaiter = (
 
 class Commands {
     constructor() {
-        this.EXTENSION_NAME = "AvivYaish.nand-ide";
         this.LANGUAGE_NAME = "Nand2Tetris";
         let symbol;
         switch (process.platform) {
@@ -81,45 +81,23 @@ class Commands {
         }
         this.outputChannel = vscode.window.createOutputChannel(this.LANGUAGE_NAME);
         this.terminal = vscode.window.createTerminal(this.LANGUAGE_NAME);
-        this.extensionPath = vscode.extensions.getExtension(this.EXTENSION_NAME).extensionPath;
+        this.extensionPath = vscode.extensions.getExtension("AvivYaish.nand-ide").extensionPath;
         this.extensionPath = this.extensionPath.replace(/\\/g, "/");
-        this.hardwareCmd = "java -classpath \"${CLASSPATH}" + symbol
-            + this.extensionPath + symbol
-            + this.extensionPath + "/bin/classes" + symbol
-            + this.extensionPath + "/bin/lib/Hack.jar" + symbol
-            + this.extensionPath + "/bin/lib/HackGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Simulators.jar" + symbol
-            + this.extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Compilers.jar\" HardwareSimulatorMain ";
-        this.CPUCmd = "java -classpath \"${CLASSPATH}" + symbol
-            + this.extensionPath + symbol
-            + this.extensionPath + "/bin/classes" + symbol
-            + this.extensionPath + "/bin/lib/Hack.jar" + symbol
-            + this.extensionPath + "/bin/lib/HackGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Simulators.jar" + symbol
-            + this.extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Compilers.jar\" CPUEmulatorMain ";
-        this.VMCmd = "java -classpath \"${CLASSPATH}" + symbol
-            + this.extensionPath + symbol
-            + this.extensionPath + "/bin/classes" + symbol
-            + this.extensionPath + "/bin/lib/Hack.jar" + symbol
-            + this.extensionPath + "/bin/lib/HackGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Simulators.jar" + symbol
-            + this.extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Compilers.jar\" VMEmulatorMain ";
-        this.assemblerCmd = "java -classpath \"${CLASSPATH}" + symbol
-            + this.extensionPath + symbol
-            + this.extensionPath + "/bin/classes" + symbol
-            + this.extensionPath + "/bin/lib/Hack.jar" + symbol
-            + this.extensionPath + "/bin/lib/HackGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/Compilers.jar" + symbol
-            + this.extensionPath + "/bin/lib/AssemblerGUI.jar" + symbol
-            + this.extensionPath + "/bin/lib/TranslatorsGUI.jar\" HackAssemblerMain ";
-        this.compilerCmd = "java -classpath \"${CLASSPATH}" + symbol
-            + this.extensionPath + symbol
-            + this.extensionPath + "/bin/classes" + symbol
-            + this.extensionPath + "/bin/lib/Hack.jar" + symbol
-            + this.extensionPath + "/bin/lib/Compilers.jar\" Hack.Compiler.JackCompiler ";
+
+        const basePath = "java -classpath \"${CLASSPATH}" + symbol + 
+            this.extensionPath + symbol + this.extensionPath + "/bin/classes" +
+            symbol + this.extensionPath + "/bin/lib/Hack.jar" + symbol +
+            this.extensionPath + "/bin/lib/Compilers.jar" + symbol;
+        const guiPath = basePath + this.extensionPath + "/bin/lib/HackGUI.jar" +
+            symbol + this.extensionPath;
+        const hardwareCpuVmPath = guiPath + "/bin/lib/Simulators.jar" + symbol +
+            this.extensionPath + "/bin/lib/SimulatorsGUI.jar";
+        this.hardwareCmd = hardwareCpuVmPath + "\" HardwareSimulatorMain ";
+        this.CPUCmd = hardwareCpuVmPath + "\" CPUEmulatorMain ";
+        this.VMCmd = hardwareCpuVmPath + "\" VMEmulatorMain ";
+        this.assemblerCmd = guiPath + "/bin/lib/AssemblerGUI.jar" + symbol +
+            this.extensionPath + "/bin/lib/TranslatorsGUI.jar\" HackAssemblerMain ";
+        this.compilerCmd = basePath + "\" Hack.Compiler.JackCompiler ";
         this.zipSource = JSON.parse(fs.readFileSync(this.extensionPath + "/assets/zip.json").toString());
     }
 
@@ -264,7 +242,6 @@ class Commands {
     stopCommand() {
         if (this.isRunning) {
             this.isRunning = false;
-            const kill = require("tree-kill");
             kill(this.process.pid);
         }
     }
@@ -413,11 +390,10 @@ class Commands {
             this.outputChannel.appendLine(
                 `[Done] Command finished ${
                     (this.isSuccess ? `successfully` : `with an error`)
-                } with code=${code} in ${
+                } in ${
                     ((new Date()).getTime() - startTime.getTime()) / 1000
                 } seconds`
             );
-            this.outputChannel.appendLine("");
         });
     }
     /**
@@ -468,7 +444,6 @@ class Commands {
                     `[Done] Compression failed.`
                 );
             }
-            this.outputChannel.appendLine("");
         });
     }
 }
