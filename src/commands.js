@@ -1,13 +1,37 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) {return value instanceof P ? value : new P(function (resolve) {resolve(value);});}
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) {try {step(generator.next(value));} catch (e) {reject(e);} }
-        function rejected(value) {try {step(generator["throw"](value));} catch (e) {reject(e);} }
-        function step(result) {result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);}
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+var _awaiter = (
+    (this && this._awaiter) || 
+    function (thisArg, _arguments, promise, generator) {
+        function adopt(value) {
+            return value instanceof promise ? value : new promise(function (resolve) {
+                resolve(value);
+            });
+        };
+        return new (promise || (promise = Promise))(function (resolve, reject) {
+            function fulfilled(value) {
+                try {
+                    step(generator.next(value));
+                } catch (e) {
+                    reject(e);
+                }
+            };
+            function rejected(value) {
+                try {
+                    step(generator["throw"](value));
+                } catch (e) {
+                    reject(e);
+                }
+            };
+            function step(result) {
+                result.done ? 
+                    resolve(result.value) : 
+                    adopt(result.value).then(fulfilled, rejected);
+            };
+            step((
+                generator = generator.apply(thisArg, _arguments || [])
+            ).next());
+        });
+});
 Object.defineProperty(exports, "__esModule", {value: true});
 exports.Commands = void 0;
 const path_1 = require("path");
@@ -74,7 +98,7 @@ class Commands {
         this.zipSource = JSON.parse(fs.readFileSync(this.extensionPath + "/assets/zip.json").toString());
     }
     executeCommand(fileUri) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return _awaiter(this, void 0, void 0, function* () {
             if (this.isRunning) {
                 vscode.window.showInformationMessage("Code is already running!");
                 return;
@@ -103,7 +127,11 @@ class Commands {
                     command = this.CPUCmd + execName + ".tst";
                     break;
                 case ".vm":
-                    command = this.VMCmd + execName + "VME.tst";
+                    if (path_1.parse(execName + "VME.tst").ext) {
+                        command = this.VMCmd + execName + "VME.tst";
+                    } else {
+                        command = this.VMCmd + execName + ".tst";
+                    }
                     break;
                 default:
                     vscode.window.showInformationMessage("No .hdl/.asm/.hack/.vm code found or selected.");
@@ -122,7 +150,7 @@ class Commands {
         });
     }
     translateCommand(fileUri) {
-        return __awaiter(this, void 0, void 0, function* () {
+        return _awaiter(this, void 0, void 0, function* () {
             const editor = vscode.window.activeTextEditor;
             if (fileUri && editor && fileUri.fsPath !== editor.document.uri.fsPath) {
                 this.document = yield vscode.workspace.openTextDocument(fileUri);
@@ -185,7 +213,7 @@ class Commands {
         }
     }
     zipCommand() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return _awaiter(this, void 0, void 0, function* () {
             if (this.isCompressing) {
                 vscode.window.showInformationMessage("Already Compressing!");
                 return;
@@ -193,17 +221,7 @@ class Commands {
             let inputName;
             let outputName;
             let zipCmd;
-            /*const promptOptions = {
-                prompt: 'WakaTime Api Key',
-                placeHolder: "Enter your folder name that want to compress.",
-                value: "1",
-                ignoreFocusOut: true,
-                validateInput: function(text){return text;}
-            };
-    
-            vscode.window.showInputBox(promptOptions).then(val => {
-                projectName = val;
-            });*/
+
             this.document = vscode.window.activeTextEditor.document;
             let filePath = path_1.parse(this.document.fileName).dir.replace(/ /g, "\" \"").replace(/\\/g, "/");
             const dirArr = filePath.split("/").filter(_ => _).reverse();
@@ -260,7 +278,7 @@ class Commands {
         });
     }
     compilerDirectoryCommand() {
-        return __awaiter(this, void 0, void 0, function* () {
+        return _awaiter(this, void 0, void 0, function* () {
             this.document = vscode.window.activeTextEditor.document;
             let command = this.compilerCmd + path_1.parse(this.document.fileName).dir;
             this.config = vscode.workspace.getConfiguration("nand2tetris");
@@ -310,10 +328,16 @@ class Commands {
         });
         this.process.on("close", (code) => {
             this.isRunning = false;
-            const endTime = new Date();
-            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this.outputChannel.appendLine(`[Done] Comparison ${(this.isSuccess ?
-                `Successfully` : `Failure`)} with code=${code} in ${elapsedTime} seconds`);
+            if (command.startsWith(this.compilerCmd)) {
+                this.isSuccess = (code === 0);
+            }
+            this.outputChannel.appendLine(
+                `[Done] Command finished ${
+                    (this.isSuccess ? `successfully` : `with an error`)
+                } with code=${code} in ${
+                    ((new Date()).getTime() - startTime.getTime()) / 1000
+                } seconds`
+            );
             this.outputChannel.appendLine("");
         });
     }
@@ -356,4 +380,3 @@ class Commands {
     }
 }
 exports.Commands = Commands;
-//# sourceMappingURL=commands.js.map
