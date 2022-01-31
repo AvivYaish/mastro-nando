@@ -1,14 +1,14 @@
 {
-    "name": "mastro-nando",
-    "version": "1.1.4",
-    "publisher": "foxyseta",
+    "name": "nand-huji-all-in-one",
+    "version": "0.1",
+    "publisher": "AvivYaish",
     "engines": {
         "vscode": "^1.51.0"
     },
-    "displayName": "Mastro NANDo",
-    "description": "A Visual Studio Code extension for Nand2Tetris development based on Zohar Lee's 'Nand2Tetris Tools'.",
+    "displayName": "Nand2Tetris HUJI All-In-One",
+    "description": "A VSCode extension for Nand2Tetris development.",
     "author": {
-        "name": "Stefano Volpe"
+        "name": "Aviv Yaish"
     },
     "categories": [
         "Programming Languages",
@@ -23,14 +23,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/foxyseta/mastro-nando"
+        "url": "https://github.com/AvivYaish/nand-huji-all-in-one"
     },
-    "homepage": "https://github.com/foxyseta/mastro-nando/blob/master/README.md",
+    "homepage": "https://github.com/AvivYaish/nand-huji-all-in-one",
     "license": "SEE LICENSE IN 'LICENSE'",
-    "bugs": {
-        "url": "https://github.com/foxyseta/mastro-nando/issues",
-        "email": "stefano.volpe2@studio.unibo.it"
-    },
     "icon": "images/icon.png",
     "galleryBanner": {
         "color": "#555555",
@@ -114,7 +110,7 @@
         },
         "configuration": {
             "type": "object",
-            "title": "Mastro NANDo",
+            "title": "Nand2Tetris HUJI All-In-One",
             "properties": {
                 "nand2tetris.showRunIconInEditorTitleMenu": {
                     "type": "boolean",
@@ -301,8 +297,8 @@
         ],
         "iconThemes": [
             {
-                "id": "mastro-nando",
-                "label": "Mastro NANDo Icon Theme",
+                "id": "nand-huji-all-in-one",
+                "label": "Nand2Tetris HUJI All-In-One Icon Theme",
                 "path": "./fileicons/icon-theme.json"
             }
         ]

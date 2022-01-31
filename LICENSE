@@ -1,10 +1,12 @@
-This software is based on Zohar Lee's 'Nand2Tetris Tools'. Please check
-https://github.com/leafvmaple/vscode-nand2tetris/blob/master/LICENSE for
+# License
+
+This software is based on Stefano Volpe's 'Nand2Tetris Tools'. Please check
+[here](https://github.com/foxyseta/mastro-nando/blob/master/LICENSE) for
 further information.
 
 MIT License
 
-Copyright (c) 2020 Stefano Volpe
+Copyright (c) 2022 Aviv Yaish
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
