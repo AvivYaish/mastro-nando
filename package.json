@@ -1,9 +1,9 @@
 {
     "name": "nand-huji-all-in-one",
-    "version": "0.1",
+    "version": "0.1.1",
     "publisher": "AvivYaish",
     "engines": {
-        "vscode": "^1.51.0"
+        "vscode": "^1.61.0"
     },
     "displayName": "Nand2Tetris HUJI All-In-One",
     "description": "A VSCode extension for Nand2Tetris development.",
@@ -27,6 +27,10 @@
     },
     "homepage": "https://github.com/AvivYaish/nand-huji-all-in-one",
     "license": "SEE LICENSE IN 'LICENSE'",
+    "bugs": {
+        "url": "https://github.com/AvivYaish/nand-huji-all-in-one/issues",
+        "email": "nand2tet@gmail.com"
+    },
     "icon": "images/icon.png",
     "galleryBanner": {
         "color": "#555555",

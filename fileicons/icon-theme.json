@@ -14,7 +14,7 @@
         }
     ],
     "iconDefinitions": {
-        // mastro-nando
+        // nand-huji-all-in-one
         "_hdl": {
             "iconPath": "./images/hdl.svg"
         },
@@ -1705,7 +1705,7 @@
         "npm-debug.log": "_npm_ignored"
     },
     "languageIds": {
-        // mastro-nando
+        // nand-huji-all-in-one
         "hdl": "_hdl",
         "tst": "_tst",
         "cmp": "_cmp-out",
