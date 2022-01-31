@@ -49,11 +49,7 @@ Jack Language | `.jack` | ✔︎ | ✔︎ | ✔︎
 Any icons not listed in the table above have been included in VS Code's built-in icon theme
 [Seti](https://github.com/microsoft/vscode/tree/master/extensions/theme-seti).
 
-## Installation
-
-### Prerequisites
-
-Visit VSCode's [Marketplace](https://marketplace.visualstudio.com/items?itemName=AvivYaish.nand-ide).
+## Prerequisites
 
 1. [Visual Studio Code](https://code.visualstudio.com/Download)
 
@@ -64,3 +60,7 @@ Visit VSCode's [Marketplace](https://marketplace.visualstudio.com/items?itemName
 
 There is no need to manually install Nand2Tetris' Software Suite, as
 it is already included in the extension itself.
+
+## Installation
+
+Visit VSCode's [Marketplace](https://marketplace.visualstudio.com/items?itemName=AvivYaish.nand-ide).
