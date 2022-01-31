@@ -2,9 +2,6 @@
 
 ![Logo](images/icon.png)
 
-![VSCode Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/AvivYaish.nand-ide)
-![VSCode Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/AvivYaish.nand-ide)
-
 ## Introduction
 
 This is is a [Visual Studio Code](https://code.visualstudio.com/) extension for
