@@ -56,6 +56,8 @@ Any icons not listed in the table above have been included in the extension from
 
 1. [Java Runtime Environment](https://www.java.com/en/download/) (recommended, but needed only if you want to use functionalities related to the Software Suite)
 
+1. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) is highly recommended for those using HUJI's READMEs.
+
 There is no need to manually install the Nand to Tetris Software Suite, as it is already incorporated in the extension itself.
 
 ### Installation
