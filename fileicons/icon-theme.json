@@ -14,7 +14,7 @@
         }
     ],
     "iconDefinitions": {
-        // nand-huji-all-in-one
+        // nand-ide
         "_hdl": {
             "iconPath": "./images/hdl.svg"
         },
@@ -1705,7 +1705,7 @@
         "npm-debug.log": "_npm_ignored"
     },
     "languageIds": {
-        // nand-huji-all-in-one
+        // nand-ide
         "hdl": "_hdl",
         "tst": "_tst",
         "cmp": "_cmp-out",

@@ -1,4 +1,4 @@
-# NAND@HUJI All-In-One
+# Nand2Tetris IDE
 
 ## Introduction
 
@@ -7,8 +7,16 @@ This is is a [Visual Studio Code](https://code.visualstudio.com/) extension for
 [Zohar Lee](https://github.com/leafvmaple/)'s
 ["Nand2Tetris Tools"](https://github.com/leafvmaple/vscode-nand2tetris) and
 [Stefano Volpe](https://github.com/FoxySeta)'s
-["Mastro NANDo"](https://github.com/foxyseta/nand-huji-all-in-one).
-It empowers an incorporated release of the [Nand to Tetris Software Suite](https://www.nand2tetris.org/software) with various Visual Studio Code functionalities. This extension is meant for students, instructors, and self-learners who want to enhance their Nand2Tetris experience.
+["Mastro NANDo"](https://github.com/foxyseta/nand-ide).
+It empowers an incorporated release of the
+[Nand to Tetris Software Suite](https://www.nand2tetris.org/software) with
+various Visual Studio Code functionalities. This extension is meant for
+students, instructors, and self-learners who want to enhance their
+Nand2Tetris experience.
+
+Features unique to
+[HUJI's Nand2Tetris](https://github.com/AvivYaish/nand2tetris_HUJI)
+are fully supported.
 
 ## Features
 
@@ -52,8 +60,8 @@ There is no need to manually install the Nand to Tetris Software Suite, as it is
 
 ### Installation
 
-Please launch VS Code Quick Open (`Ctrl` + `P`), digit `ext install foxyseta.nand-huji-all-in-one`, and press enter.
-You may also visit the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=foxyseta.nand-huji-all-in-one) for further support.
+Please launch VS Code Quick Open (`Ctrl` + `P`), digit `ext install foxyseta.nand-ide`, and press enter.
+You may also visit the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=foxyseta.nand-ide) for further support.
 
 ## Contributor setup
 

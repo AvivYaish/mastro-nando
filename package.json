@@ -1,11 +1,11 @@
 {
-    "name": "nand-huji-all-in-one",
+    "name": "nand-ide",
     "version": "0.1.1",
     "publisher": "AvivYaish",
     "engines": {
         "vscode": "^1.61.0"
     },
-    "displayName": "Nand2Tetris HUJI All-In-One",
+    "displayName": "Nand2Tetris IDE",
     "description": "A VSCode extension for Nand2Tetris development.",
     "author": {
         "name": "Aviv Yaish"
@@ -23,12 +23,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/AvivYaish/nand-huji-all-in-one"
+        "url": "https://github.com/AvivYaish/nand-ide"
     },
-    "homepage": "https://github.com/AvivYaish/nand-huji-all-in-one",
+    "homepage": "https://github.com/AvivYaish/nand-ide",
     "license": "SEE LICENSE IN 'LICENSE'",
     "bugs": {
-        "url": "https://github.com/AvivYaish/nand-huji-all-in-one/issues",
+        "url": "https://github.com/AvivYaish/nand-ide/issues",
         "email": "nand2tet@gmail.com"
     },
     "icon": "images/icon.png",
@@ -114,7 +114,7 @@
         },
         "configuration": {
             "type": "object",
-            "title": "Nand2Tetris HUJI All-In-One",
+            "title": "Nand2Tetris IDE",
             "properties": {
                 "nand2tetris.showRunIconInEditorTitleMenu": {
                     "type": "boolean",
@@ -301,8 +301,8 @@
         ],
         "iconThemes": [
             {
-                "id": "nand-huji-all-in-one",
-                "label": "Nand2Tetris HUJI All-In-One Icon Theme",
+                "id": "nand-ide",
+                "label": "Nand2Tetris IDE Icon Theme",
                 "path": "./fileicons/icon-theme.json"
             }
         ]
