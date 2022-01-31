@@ -25,7 +25,7 @@
             "patterns": [
                 {
                     "comment": "Performs arithmetic and logical operations on the stack.",
-                    "match": "\\b(add|sub|neg|eq|gt|lt|and|or|not)\\b",
+                    "match": "\\b(add|sub|neg|eq|gt|lt|and|or|not|shiftleft|shiftright)\\b",
                     "name": "keyword.operator"
                 }
             ]
