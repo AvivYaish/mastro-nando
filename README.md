@@ -1,13 +1,8 @@
-# Mastro NANDo
-
-![Mastro NANDo Logo](images/icon.png)
-
-![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/foxyseta.mastro-nando)
-![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/foxyseta.mastro-nando)
+# NAND@HUJI All-In-One
 
 ## Introduction
 
-Mastro NANDo is a [Visual Studio Code](https://code.visualstudio.com/) extension for [Nand2Tetris](https://www.nand2tetris.org/) development based on [Zohar Lee](https://github.com/leafvmaple/)'s ["Nand2Tetris Tools"](https://github.com/leafvmaple/vscode-nand2tetris).
+This is is a [Visual Studio Code](https://code.visualstudio.com/) extension for [Nand2Tetris](https://www.nand2tetris.org/) development based on [Zohar Lee](https://github.com/leafvmaple/)'s ["Nand2Tetris Tools"](https://github.com/leafvmaple/vscode-nand2tetris) and [Stefano Volpe](https://github.com/FoxySeta)'s ["Mastro NANDo"](https://github.com/foxyseta/mastro-nando).
 It empowers an incorporated release of the [Nand to Tetris Software Suite](https://www.nand2tetris.org/software) with various Visual Studio Code functionalities. This extension is meant for students, instructors, and self-learners who want to enhance their Nand2Tetris experience.
 
 ## Features
@@ -46,7 +41,7 @@ Any icons not listed in the table above have been included in the extension from
 
 1. [Visual Studio Code](https://code.visualstudio.com/Download)
 
-1. [Java Runtime Environment](https://www.java.com/en/download/) (recommended, but needed only if you want to use functionalities related to the Nand to Tetris Software Suite)
+1. [Java Runtime Environment](https://www.java.com/en/download/) (recommended, but needed only if you want to use functionalities related to the Software Suite)
 
 There is no need to manually install the Nand to Tetris Software Suite, as it is already incorporated in the extension itself.
 
@@ -57,4 +52,4 @@ You may also visit the [Visual Studio Code Marketplace](https://marketplace.visu
 
 ## Contributor setup
 
-After cloning this [GitHub repository](https://github.com/foxyseta/mastro-nando), you might want to follow through with the documentation relating [VS Code's Extension API](https://code.visualstudio.com/api).
+After cloning this repository, you might want to follow through with the documentation relating [VS Code's Extension API](https://code.visualstudio.com/api).
