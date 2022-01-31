@@ -66,6 +66,4 @@ it is already included in the extension itself.
 
 ### Installation
 
-Please launch VSCode's Quick Open (`Ctrl` + `P`), digit `ext install AvivYaish.nand-ide`, and press enter.
-You may also visit VSCode's
-[Marketplace](https://marketplace.visualstudio.com/items?itemName=AvivYaish.nand-ide) for further support.
+Visit VSCode's [Marketplace](https://marketplace.visualstudio.com/items?itemName=AvivYaish.nand-ide).
