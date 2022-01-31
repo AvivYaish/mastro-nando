@@ -1,42 +1,72 @@
+// @ts-check 
 "use strict";
-var _awaiter = (
-    (this && this._awaiter) || 
-    function (thisArg, _arguments, promise, generator) {
-        function adopt(value) {
-            return value instanceof promise ? value : new promise(function (resolve) {
-                resolve(value);
-            });
-        };
-        return new (promise || (promise = Promise))(function (resolve, reject) {
-            function fulfilled(value) {
-                try {
-                    step(generator.next(value));
-                } catch (e) {
-                    reject(e);
-                }
-            };
-            function rejected(value) {
-                try {
-                    step(generator["throw"](value));
-                } catch (e) {
-                    reject(e);
-                }
-            };
-            function step(result) {
-                result.done ? 
-                    resolve(result.value) : 
-                    adopt(result.value).then(fulfilled, rejected);
-            };
-            step((
-                generator = generator.apply(thisArg, _arguments || [])
-            ).next());
-        });
-});
+const exec = require("child_process").exec;
+const vscode = require("vscode");
+const path = require("path");
+const fs = require("fs");
+
 Object.defineProperty(exports, "__esModule", {value: true});
 exports.Commands = void 0;
-const path_1 = require("path");
-const vscode = require("vscode");
-const fs = require("fs");
+
+var _awaiter = (
+    (this && this._awaiter) || 
+    function (
+        /** @type {any} */ thisArg, /** @type {any} */ _arguments, 
+        /** @type {PromiseConstructor} */ promise, 
+        /** @type {{ [x: string]: (arg0: any) => any; next: (arg0: any) => any; apply: (arg0: any, arg1: any) => any; }} */ generator
+    ) {
+        /**
+         * @param {any} value
+         */
+        function adopt(value) {
+            return value instanceof promise ? value : new promise(
+                function (/** @type {(arg0: any) => void} */ resolve) {
+                    resolve(value);
+                }
+            );
+        };
+        return new (promise || (promise = Promise))(
+            function (
+                /** @type {(arg0: any) => any} */ resolve, 
+                /** @type {(arg0: any) => void} */ reject
+            ) {
+                /**
+                 * @param {any} value
+                 */
+                function fulfilled(value) {
+                    try {
+                        step(generator.next(value));
+                    } catch (e) {
+                        reject(e);
+                    }
+                };
+
+                /**
+                 * @param {any} value
+                 */
+                function rejected(value) {
+                    try {
+                        step(generator["throw"](value));
+                    } catch (e) {
+                        reject(e);
+                    }
+                };
+
+                /**
+                 * @param {{ done: any; value: any; }} result
+                 */
+                function step(result) {
+                    result.done ? 
+                        resolve(result.value) : 
+                        adopt(result.value).then(fulfilled, rejected);
+                };
+                step((
+                    generator = generator.apply(thisArg, _arguments || [])
+                ).next());
+            }
+        );
+});
+
 class Commands {
     constructor() {
         this.EXTENSION_NAME = "AvivYaish.nand-ide";
@@ -97,6 +127,10 @@ class Commands {
             + this.extensionPath + "/bin/lib/Compilers.jar\" Hack.Compiler.JackCompiler ";
         this.zipSource = JSON.parse(fs.readFileSync(this.extensionPath + "/assets/zip.json").toString());
     }
+
+    /**
+     * @param {vscode.Uri} fileUri
+     */
     executeCommand(fileUri) {
         return _awaiter(this, void 0, void 0, function* () {
             if (this.isRunning) {
@@ -114,9 +148,10 @@ class Commands {
                 vscode.window.showInformationMessage("No code found or selected.");
                 return;
             }
-            const filePath = path_1.parse(this.document.fileName);
-            const fileName = filePath.name + filePath.ext;
-            const execName = path_1.join(filePath.dir, filePath.name).replace(/ /g, "\" \"").replace(/\\/g, "/");
+            const filePath = path.parse(this.document.fileName);
+            const execName = path.join(
+                filePath.dir, filePath.name
+            ).replace(/ /g, "\" \"").replace(/\\/g, "/");
             let command;
             switch (filePath.ext) {
                 case ".hdl":
@@ -127,28 +162,38 @@ class Commands {
                     command = this.CPUCmd + execName + ".tst";
                     break;
                 case ".vm":
-                    if (path_1.parse(execName + "VME.tst").ext) {
+                    if (path.parse(execName + "VME.tst").ext) {
                         command = this.VMCmd + execName + "VME.tst";
                     } else {
                         command = this.VMCmd + execName + ".tst";
                     }
                     break;
                 default:
-                    vscode.window.showInformationMessage("No .hdl/.asm/.hack/.vm code found or selected.");
+                    vscode.window.showInformationMessage(
+                        "No .hdl/.asm/.hack/.vm code found or selected."
+                    );
                     return;
             }
+
             this.config = vscode.workspace.getConfiguration("nand2tetris");
-            const runInTerminal = this.config.get("runInTerminal");
             const clearPreviousOutput = this.config.get("clearPreviousOutput");
             const preserveFocus = this.config.get("preserveFocus");
-            if (runInTerminal) {
-                this.executeCommandInTerminal(command, clearPreviousOutput, preserveFocus);
-            }
-            else {
-                this.executeCommandInOutputChannel(fileName, command, clearPreviousOutput, preserveFocus);
+            if (this.config.get("runInTerminal")) {
+                this.executeCommandInTerminal(
+                    command, clearPreviousOutput, preserveFocus
+                );
+            } else {
+                this.executeCommandInOutputChannel(
+                    filePath.name + filePath.ext, command, clearPreviousOutput,
+                    preserveFocus
+                );
             }
         });
     }
+
+    /**
+     * @param {vscode.Uri} fileUri
+     */
     translateCommand(fileUri) {
         return _awaiter(this, void 0, void 0, function* () {
             const editor = vscode.window.activeTextEditor;
@@ -162,49 +207,63 @@ class Commands {
                 vscode.window.showInformationMessage("No code found or selected.");
                 return;
             }
-            const filePath = path_1.parse(this.document.fileName);
-            const fileName = filePath.name + filePath.ext;
-            const execName = path_1.join(filePath.dir, filePath.name).replace(/ /g, "\" \"").replace(/\\/g, "/");
+
+            const filePath = path.parse(this.document.fileName);
+            const execName = path.join(
+                filePath.dir, filePath.name
+            ).replace(/ /g, "\" \"").replace(/\\/g, "/");
             let command;
             switch (filePath.ext) {
                 case ".asm":
-                    command = this.assemblerCmd + execName + ".asm";
+                    command = this.assemblerCmd;
                     break;
                 case ".jack":
-                    command = this.compilerCmd + execName + ".jack";
+                    command = this.compilerCmd;
                     break;
                 default:
-                    vscode.window.showInformationMessage("No .asm/.jack code found or selected.");
+                    vscode.window.showInformationMessage(
+                        "No .asm/.jack code found or selected."
+                    );
                     return;
             }
+            command += execName + filePath.ext;
             this.config = vscode.workspace.getConfiguration("nand2tetris");
-            const runInTerminal = this.config.get("runInTerminal");
+
             const clearPreviousOutput = this.config.get("clearPreviousOutput");
             const preserveFocus = this.config.get("preserveFocus");
-            if (runInTerminal) {
-                this.executeCommandInTerminal(command, clearPreviousOutput, preserveFocus);
-            }
-            else {
-                this.executeCommandInOutputChannel(fileName, command, clearPreviousOutput, preserveFocus);
+            if (this.config.get("runInTerminal")) {
+                this.executeCommandInTerminal(
+                    command, clearPreviousOutput, preserveFocus
+                );
+            } else {
+                this.executeCommandInOutputChannel(
+                    filePath.name + filePath.ext, command, clearPreviousOutput,
+                    preserveFocus
+                );
             }
         });
     }
+
     executeHardwareCommand() {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(this.hardwareCmd);
     }
+
     executeCPUCommand() {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(this.CPUCmd);
     }
+    
     executeVMCommand() {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(this.VMCmd);
     }
+
     executeAssemblerCommand() {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(this.assemblerCmd);
     }
+
     stopCommand() {
         if (this.isRunning) {
             this.isRunning = false;
@@ -212,6 +271,7 @@ class Commands {
             kill(this.process.pid);
         }
     }
+
     zipCommand() {
         return _awaiter(this, void 0, void 0, function* () {
             if (this.isCompressing) {
@@ -223,7 +283,7 @@ class Commands {
             let zipCmd;
 
             this.document = vscode.window.activeTextEditor.document;
-            let filePath = path_1.parse(this.document.fileName).dir.replace(/ /g, "\" \"").replace(/\\/g, "/");
+            let filePath = path.parse(this.document.fileName).dir.replace(/ /g, "\" \"").replace(/\\/g, "/");
             const dirArr = filePath.split("/").filter(_ => _).reverse();
             if (this.zipSource[dirArr[0]]) {
                 const courseInfo = this.zipSource[dirArr[0]];
@@ -238,7 +298,7 @@ class Commands {
                     zipCmd = zipCmd + " -a " + extratring;
                 }
                 const baseName = parseInt(dirArr[0], 10).toString();
-                filePath = path_1.resolve(filePath, "..");
+                filePath = path.resolve(filePath, "..");
                 outputName = `${filePath}/project${baseName}.zip`;
                 inputName = `${filePath}/${dirArr[0]}`;
             }
@@ -255,11 +315,11 @@ class Commands {
                     zipCmd = zipCmd + " -a " + extratring;
                 }
                 const baseName = parseInt(dirArr[1], 10).toString();
-                filePath = path_1.resolve(filePath, "../..");
+                filePath = path.resolve(filePath, "../..");
                 outputName = `${filePath}/project${baseName}.zip`;
                 inputName = `${filePath}/${dirArr[1]}`;
             }
-            if (inputName == null) {
+            if (inputName === null) {
                 vscode.window.showInformationMessage("Could not found source to compress!");
                 return;
             }
@@ -277,25 +337,39 @@ class Commands {
             }
         });
     }
+
     compilerDirectoryCommand() {
         return _awaiter(this, void 0, void 0, function* () {
             this.document = vscode.window.activeTextEditor.document;
-            let command = this.compilerCmd + path_1.parse(this.document.fileName).dir;
+            let command = this.compilerCmd + path.parse(
+                this.document.fileName
+            ).dir;
             this.config = vscode.workspace.getConfiguration("nand2tetris");
             const runInTerminal = this.config.get("runInTerminal");
             const clearPreviousOutput = this.config.get("clearPreviousOutput");
             const preserveFocus = this.config.get("preserveFocus");
             if (runInTerminal) {
-                this.executeCommandInTerminal(command, clearPreviousOutput, preserveFocus);
+                this.executeCommandInTerminal(
+                    command, clearPreviousOutput, preserveFocus
+                );
             }
             else {
-                this.executeCommandInOutputChannel(fileName, command, clearPreviousOutput, preserveFocus);
+                this.executeCommandInOutputChannel(
+                    fileName, command, clearPreviousOutput, preserveFocus
+                );
             }
         });
     }
+
     dispose() {
         this.stopCommand();
     }
+
+    /**
+     * @param {string} command
+     * @param {any} clearPreviousOutput
+     * @param {boolean} preserveFocus
+     */
     executeCommandInTerminal(command, clearPreviousOutput, preserveFocus) {
         if (clearPreviousOutput) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
@@ -304,7 +378,15 @@ class Commands {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(command);
     }
-    executeCommandInOutputChannel(fileName, command, clearPreviousOutput, preserveFocus) {
+    /**
+     * @param {any} fileName
+     * @param {string} command
+     * @param {any} clearPreviousOutput
+     * @param {boolean} preserveFocus
+     */
+    executeCommandInOutputChannel(
+        fileName, command, clearPreviousOutput, preserveFocus
+    ) {
         if (clearPreviousOutput) {
             this.outputChannel.clear();
         }
@@ -312,19 +394,19 @@ class Commands {
         this.isSuccess = false;
         this.outputChannel.show(preserveFocus);
         this.outputChannel.appendLine(`[Running] ${fileName}`);
-        const exec = require("child_process").exec;
         const startTime = new Date();
         this.process = exec(command, {cwd: this.extensionPath});
         this.process.stdout.on("data", (data) => {
+            this.outputChannel.appendLine(data);
             if (data.match("successfully")) {
                 this.isSuccess = true;
             }
         });
         this.process.stderr.on("data", (data) => {
+            this.outputChannel.appendLine(data);
             if (data.match("java")) {
                 data = "You need to install [Java Runtime Environment] First.";
             }
-            this.outputChannel.appendLine(data);
         });
         this.process.on("close", (code) => {
             this.isRunning = false;
@@ -341,6 +423,11 @@ class Commands {
             this.outputChannel.appendLine("");
         });
     }
+    /**
+     * @param {string} command
+     * @param {any} clearPreviousOutput
+     * @param {boolean} preserveFocus
+     */
     zipCommandInTerminal(command, clearPreviousOutput, preserveFocus) {
         if (clearPreviousOutput) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
@@ -349,6 +436,12 @@ class Commands {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(command);
     }
+    /**
+     * @param {string} command
+     * @param {any} outputName
+     * @param {any} clearPreviousOutput
+     * @param {boolean} preserveFocus
+     */
     zipCommandInOutputChannel(command, outputName, clearPreviousOutput, preserveFocus) {
         if (clearPreviousOutput) {
             this.outputChannel.clear();
@@ -357,8 +450,6 @@ class Commands {
         this.isSuccess = false;
         this.outputChannel.show(preserveFocus);
         this.outputChannel.appendLine(`[Compressing] ${outputName}`);
-        const exec = require("child_process").exec;
-        const startTime = new Date();
         this.process = exec(command, {cwd: this.extensionPath});
         this.process.stdout.on("data", (data) => {
             this.outputChannel.appendLine(data);
@@ -371,12 +462,18 @@ class Commands {
         });
         this.process.on("close", (code) => {
             this.isRunning = false;
-            const endTime = new Date();
-            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this.outputChannel.appendLine(`[Done] End Compress with code=${code} in ${elapsedTime} seconds`);
-            this.outputChannel.appendLine(`[Done] Compress to file ${outputName}`);
+            if (code === 1) {
+                this.outputChannel.appendLine(
+                    `[Done] Compressed to file ${outputName}`
+                );
+            } else {
+                this.outputChannel.appendLine(
+                    `[Done] Compression failed.`
+                );
+            }
             this.outputChannel.appendLine("");
         });
     }
 }
+
 exports.Commands = Commands;
