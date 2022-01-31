@@ -72,17 +72,12 @@ class Commands {
         this.EXTENSION_NAME = "AvivYaish.nand-ide";
         this.LANGUAGE_NAME = "Nand2Tetris";
         let symbol;
-        this.platform = process.platform;
-        switch (this.platform) {
+        switch (process.platform) {
             case "win32":
                 symbol = ";";
                 break;
-            case "linux":
+            default:
                 symbol = ":";
-                break;
-            case "darwin":
-                symbol = ":";
-                break;
         }
         this.outputChannel = vscode.window.createOutputChannel(this.LANGUAGE_NAME);
         this.terminal = vscode.window.createTerminal(this.LANGUAGE_NAME);
@@ -145,7 +140,9 @@ class Commands {
                 this.document = editor.document;
             }
             else {
-                vscode.window.showInformationMessage("No code found or selected.");
+                vscode.window.showInformationMessage(
+                    "No code found or selected."
+                );
                 return;
             }
             const filePath = path.parse(this.document.fileName);
@@ -162,7 +159,7 @@ class Commands {
                     command = this.CPUCmd + execName + ".tst";
                     break;
                 case ".vm":
-                    if (path.parse(execName + "VME.tst").ext) {
+                    if ((path.parse(execName + "VME.tst")).ext) {
                         command = this.VMCmd + execName + "VME.tst";
                     } else {
                         command = this.VMCmd + execName + ".tst";
