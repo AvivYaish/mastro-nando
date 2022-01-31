@@ -8,15 +8,13 @@ This is is a [Visual Studio Code](https://code.visualstudio.com/) extension for
 ["Nand2Tetris Tools"](https://github.com/leafvmaple/vscode-nand2tetris) and
 [Stefano Volpe](https://github.com/FoxySeta)'s
 ["Mastro NANDo"](https://github.com/foxyseta/nand-ide).
-It empowers an incorporated release of the
-[Nand to Tetris Software Suite](https://www.nand2tetris.org/software) with
-various Visual Studio Code functionalities. This extension is meant for
-students, instructors, and self-learners who want to enhance their
-Nand2Tetris experience.
 
-Features unique to
-[HUJI's Nand2Tetris](https://github.com/AvivYaish/nand2tetris_HUJI)
-are fully supported.
+It incoporates [HUJI's version](https://github.com/AvivYaish/nand2tetris_HUJI)
+of Nand2Tetris' Software Suite with various Visual Studio Code functionalities.
+Features unique to HUJI's version, such as shifts, are fully supported.
+
+This extension is meant for students, instructors, and self-learners who want
+to enhance their Nand2Tetris experience.
 
 ## Features
 
@@ -24,7 +22,7 @@ are fully supported.
 
 Name | Icon | Requires Nand to Tetris Software Suite | Description
 ---- | ---- | ------------------------------- | -----------
-Run code | ![Run Code button](images/button.png) | ✔︎ | Runs your current file (supports `.hdl`, `.asm`, `hack` and `.vm` files) via CLI. Needs a `.tst` file in the same folder to work.
+Run code | ![Run Code button](images/button.png) | ✔︎ | Runs your current file (supports `.hdl`, `.asm`, `.hack` and `.vm` files) via CLI. Needs a `.tst` file in the same folder to work.
 Stop running | | ✔︎ | Aborts code execution
 Translate code | ![Translate Code button](images/button2.png) | ✔︎ | Translate your current file (supports `.asm` and `jack` files) via CLI
 Open Hardware Simulator | | ✔︎ | Runs the Hardware Simulator via GUI
@@ -46,7 +44,8 @@ Hack Machine Language | `.hack` | ✔︎ | | ✔︎
 Hack Virtual Machine Language | `.vm` | ✔︎ | ✔︎ | ✔︎
 Jack Language | `.jack` | ✔︎ | ✔︎ | ✔︎
 
-Any icons not listed in the table above have been included in the extension from [VS Code's built-in icon theme Seti](https://github.com/microsoft/vscode/tree/master/extensions/theme-seti).
+Any icons not listed in the table above have been included in VS Code's built-in icon theme
+[Seti](https://github.com/microsoft/vscode/tree/master/extensions/theme-seti).
 
 ## User setup
 
@@ -54,17 +53,17 @@ Any icons not listed in the table above have been included in the extension from
 
 1. [Visual Studio Code](https://code.visualstudio.com/Download)
 
-1. [Java Runtime Environment](https://www.java.com/en/download/) (recommended, but needed only if you want to use functionalities related to the Software Suite)
+1. [Java Runtime Environment](https://www.java.com/en/download/)
+   (recommended, but needed only if you want to use functionalities related to the Software Suite)
 
-1. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) is highly recommended for those using HUJI's READMEs.
+1. [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+   is highly recommended for those using HUJI's READMEs.
 
-There is no need to manually install the Nand to Tetris Software Suite, as it is already incorporated in the extension itself.
+There is no need to manually install Nand2Tetris' Software Suite, as
+it is already included in the extension itself.
 
 ### Installation
 
-Please launch VS Code Quick Open (`Ctrl` + `P`), digit `ext install foxyseta.nand-ide`, and press enter.
-You may also visit the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=foxyseta.nand-ide) for further support.
-
-## Contributor setup
-
-After cloning this repository, you might want to follow through with the documentation relating [VS Code's Extension API](https://code.visualstudio.com/api).
+Please launch VSCode's Quick Open (`Ctrl` + `P`), digit `ext install AvivYaish.nand-ide`, and press enter.
+You may also visit VSCode's
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=AvivYaish.nand-ide) for further support.
