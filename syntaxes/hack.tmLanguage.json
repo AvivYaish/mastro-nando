@@ -32,8 +32,8 @@
         "c": {
             "patterns": [
                 {
-                    "comment": "1??-comp-dest-jump",
-                    "match": "\\b1[01]{2}([01]{7})([01]{3})([01]{3})\\b",
+                    "comment": "1-??-a-comp-dest-jump",
+                    "match": "\\b1[01]{2}([01]{1})([01]{6})([01]{3})([01]{3})\\b",
                     "name": "keyword.other",
                     "captures": {
                         "1": {
